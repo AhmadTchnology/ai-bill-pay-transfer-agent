@@ -34,7 +34,7 @@ This agent takes a single sentence, spoken or typed the way an Iraqi actually sa
 | Test set: 50+ Iraqi-dialect requests incl. ambiguous/malformed, LLM-generated then hand-edited | `tests/testset_iraqi.json` — 55 chat cases + 3 wallet idempotency scripts, generated via `tests/_make_testset.py` (drafted with GLM-5.3 from category definitions, then hand-edited for realism). |
 | Test results, incl. behavior on requests that should not go through | `tests/results.md` — tuning set, **58/58 PASS in live mode** (real GLM-5.3 NLU). Plus a **held-out set** (`tests/testset_heldout.json`, 10 cases written after development froze, never used for tuning) with honest results in `tests/results_heldout.md`. |
 | Edge cases: insufficient balance, unknown contact, a request that is really two requests | Covered by test categories `insufficient_funds*`, `unknown_contact`, `two_in_one*` (one card lists both, one "نعم" executes both, "لا" cancels both). |
-| **Stretch:** voice input in spoken Iraqi Arabic | `voice/stt.py` — faster-whisper `large-v3-turbo` (int8) with an Iraqi-dialect `initial_prompt`, wired into the same text pipeline. Run the web UI, click the 🎙 button. |
+| **Stretch:** voice input in spoken Iraqi Arabic | **Done and verified.** `voice/stt.py` — faster-whisper `large-v3-turbo` (int8) with Iraqi-dialect `initial_prompt` + hotwords for short confirm words. The browser 🎙 button uploads webm/opus → `/api/voice` → transcript → **the same text pipeline and confirmation rules — voice can never skip the "نعم"**. End-to-end evidence: `tests/voice_smoke.py` — **6/6 PASS** (spoken transfer → card → spoken "نعم" → single debit; spoken ambiguous "أحمد" → question; spoken bill → asks amount; spoken balance query → reports balance). |
 
 ---
 
@@ -114,7 +114,14 @@ py tests/run_tests.py --live     :: full E2E with the real GLM-5.3 NLU
 
 The harness resets the wallet before every case and verifies both the conversation behavior **and** wallet invariants (balance delta, transaction count).
 
-**Voice (stretch):** `pip install faster-whisper`, then use the 🎙 button in the chat. First run downloads the model (~1.5 GB, int8 ≈ 2 GB RAM).
+**Voice (stretch — done and verified):** `pip install faster-whisper`, then use the 🎙 button in the chat. First run downloads the model (~1.6 GB, int8 ≈ 2 GB RAM). Reproduce our voice evidence:
+
+```bat
+py tests\make_voice_fixtures.py   :: Iraqi-voice fixtures (edge-tts, ar-IQ)
+py tests\voice_smoke.py           :: 6/6 — spoken transfer/confirm/ambiguity/bill/balance
+```
+
+The browser mic records webm/opus; the smoke test uploads exactly that container/codec, so it exercises the real mic path without needing a live microphone.
 
 ---
 

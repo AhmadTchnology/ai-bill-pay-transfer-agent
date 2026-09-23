@@ -19,7 +19,7 @@ This project was built **with AI assistance, openly**:
 
 ## Tools & libraries
 
-- **Python 3.12**, **FastAPI** + **Uvicorn** (wallet API + web backend), **SQLite** (mock wallet store), **httpx** (agent↔wallet client, idempotency keys), **python-dotenv**, **openai** SDK (GLM calls), **faster-whisper** (voice).
+- **Python 3.12**, **FastAPI** + **Uvicorn** (wallet API + web backend), **SQLite** (mock wallet store), **httpx** (agent↔wallet client, idempotency keys), **python-dotenv**, **openai** SDK (GLM calls), **faster-whisper** (voice), **edge-tts** (only to generate Iraqi-voice test fixtures — `ar-IQ-BasselNeural`).
 - Testing: custom harness (`tests/run_tests.py`) with replay/live modes; no external test framework needed for harness-level evaluation.
 - Frontend: single-file HTML/CSS/JS chat UI (no framework — deliberate simplicity).
 
