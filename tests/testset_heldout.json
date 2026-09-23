@@ -1,0 +1,294 @@
+{
+  "_meta": {
+    "description": "HELD-OUT evaluation set: written after development froze, never used for tuning, run once for honest reporting (tests/results_heldout.md). Same schema as the tuning set.",
+    "user": "u1",
+    "starting_balance": 450000
+  },
+  "cases": [
+    {
+      "id": "H01",
+      "category": "heldout_transfer",
+      "turns": [
+        {
+          "text": "حول لي 45000 لفاطمة",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "اكيد",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 45000,
+              "recipient": "فاطمة"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -45000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "H02",
+      "category": "heldout_bill_slang",
+      "turns": [
+        {
+          "text": "سدد فاتورة النت 25000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 25000,
+              "biller": "انترنت"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -25000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "H03",
+      "category": "heldout_transfer",
+      "turns": [
+        {
+          "text": "ابعت 60000 لحسين",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 60000,
+              "recipient": "حسين"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -60000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "H04",
+      "category": "heldout_ambiguous",
+      "turns": [
+        {
+          "text": "حول 200000 لاحمد",
+          "expect": "ask_disambiguation"
+        },
+        {
+          "text": "3",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 200000,
+              "recipient": "أحمد"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -200000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "H05",
+      "category": "heldout_insufficient",
+      "turns": [
+        {
+          "text": "ادفع فاتورة الكهرباء 600000",
+          "expect": "rejected_insufficient"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 600000,
+              "biller": "كهرباء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "H06",
+      "category": "heldout_two_in_one",
+      "turns": [
+        {
+          "text": "عبئ كورك 12000 وادفع فاتورة المي 7000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed_both"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 12000,
+              "biller": "كورك"
+            },
+            {
+              "action": "bill_pay",
+              "amount": 7000,
+              "biller": "ماء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -19000,
+        "txn_count": 2
+      }
+    },
+    {
+      "id": "H07",
+      "category": "heldout_partial_name",
+      "turns": [
+        {
+          "text": "حول مية الف لمحمد",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 100000,
+              "recipient": "محمد"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -100000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "H08",
+      "category": "heldout_missing_biller",
+      "turns": [
+        {
+          "text": "دفع فاتورة",
+          "expect": "ask_which_biller"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": null
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "H09",
+      "category": "heldout_nonsense",
+      "turns": [
+        {
+          "text": "خمشة",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "H10",
+      "category": "heldout_refuse",
+      "turns": [
+        {
+          "text": "حول 80000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "لا بعدين",
+          "expect": "cancelled"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 80000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    }
+  ]
+}
