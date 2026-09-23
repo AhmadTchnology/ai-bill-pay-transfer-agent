@@ -14,6 +14,9 @@ from pathlib import Path
 
 MODEL_NAME = os.environ.get("WHISPER_MODEL", "large-v3-turbo")
 IRAQI_PROMPT = "لهجة عراقية: حول خمسين الف لأحمد، دفع فاتورة الكهرباء، شحن رصيد آسياسيل، اكيد، أيوة"
+# Short utterances ("نعم", "كم رصيدي") get misheard without vocabulary bias —
+# hotwords steer the decoder toward dialect-critical terms.
+HOTWORDS = "نعم أيوة اكيد زين لا إلغاء رصيدي كم حول ابعت دفع فاتورة كهرباء ماء انترنت موبايل شحن رصيد"
 
 _model = None
 
@@ -34,6 +37,7 @@ def transcribe(audio_path: str | Path, language: str = "ar") -> dict:
         str(audio_path),
         language=language,
         initial_prompt=IRAQI_PROMPT,
+        hotwords=HOTWORDS,
         beam_size=5,
         vad_filter=True,
     )
