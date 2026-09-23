@@ -1,0 +1,1619 @@
+{
+  "_meta": {
+    "description": "Test set of Iraqi-dialect requests: drafted with an LLM (GLM-5.3) from category definitions, then hand-edited for realism. Includes ambiguous, malformed, insufficient-funds and should-not-execute cases. 'nlu' holds recorded NLU output per NLU-calling turn so the harness can replay deterministically without an API key; in live mode the real GLM-5.3 NLU is used instead.",
+    "user": "u1",
+    "starting_balance": 450000
+  },
+  "cases": [
+    {
+      "id": "T01",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "حول 50000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 50000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -50000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T02",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "ابعت 25000 لمحمد الجبوري",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 25000,
+              "recipient": "محمد الجبوري"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -25000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T03",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "حول لي 100000 لنور",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "اكيد",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 100000,
+              "recipient": "نور"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -100000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T04",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "سوي تحويل 75000 لفاطمة",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "ايوة",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 75000,
+              "recipient": "فاطمة"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -75000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T05",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "دز 12000 لعمر التميمي",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 12000,
+              "recipient": "عمر التميمي"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -12000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T06",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "حول مية الف لمريم عبد الله",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 100000,
+              "recipient": "مريم عبد الله"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -100000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T07",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "ابعت 15000 للدكتورة ليلى",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "زين",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 15000,
+              "recipient": "د. ليلى"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -15000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T08",
+      "category": "simple_transfer",
+      "turns": [
+        {
+          "text": "كمل حوالة 30000 لكرار",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 30000,
+              "recipient": "كرار"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -30000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T09",
+      "category": "bill_missing_amount",
+      "turns": [
+        {
+          "text": "دفع فاتورة الكهرباء",
+          "expect": "ask_amount"
+        },
+        {
+          "text": "35000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": "كهرباء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -35000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T10",
+      "category": "simple_bill",
+      "turns": [
+        {
+          "text": "سدد فاتورة الماء 8000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 8000,
+              "biller": "ماء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -8000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T11",
+      "category": "simple_bill",
+      "turns": [
+        {
+          "text": "دفع انترنت الفردوس 30000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "اكيد",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 30000,
+              "biller": "انترنت"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -30000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T12",
+      "category": "simple_bill",
+      "turns": [
+        {
+          "text": "شحن رصيد آسياسيل 15000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 15000,
+              "biller": "آسياسيل"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -15000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T13",
+      "category": "simple_bill",
+      "turns": [
+        {
+          "text": "شحن زين العراق 20000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 20000,
+              "biller": "زين العراق"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -20000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T14",
+      "category": "simple_bill",
+      "turns": [
+        {
+          "text": "عبئ كورك 10000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "ايوة",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 10000,
+              "biller": "كورك"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -10000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T15",
+      "category": "simple_bill",
+      "turns": [
+        {
+          "text": "ادفع فاتورة المي 12000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 12000,
+              "biller": "ماء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -12000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T16",
+      "category": "ambiguous_contact",
+      "turns": [
+        {
+          "text": "حول 50000 لأحمد",
+          "expect": "ask_disambiguation"
+        },
+        {
+          "text": "2",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 50000,
+              "recipient": "أحمد"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -50000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T17",
+      "category": "ambiguous_contact",
+      "turns": [
+        {
+          "text": "ابعت 20000 لعلي",
+          "expect": "ask_disambiguation"
+        },
+        {
+          "text": "1",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 20000,
+              "recipient": "علي"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -20000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T18",
+      "category": "ambiguous_resolved_specific",
+      "turns": [
+        {
+          "text": "حول 30000 لأحمد حسين",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 30000,
+              "recipient": "أحمد حسين"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -30000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T19",
+      "category": "ambiguous_resolved_specific",
+      "turns": [
+        {
+          "text": "ابعت 70000 لاحمد علي",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 70000,
+              "recipient": "أحمد علي"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -70000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T20",
+      "category": "missing_recipient",
+      "turns": [
+        {
+          "text": "حول 20000",
+          "expect": "ask_recipient"
+        },
+        {
+          "text": "لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 20000,
+              "recipient": null
+            }
+          ]
+        },
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": null,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -20000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T21",
+      "category": "missing_biller",
+      "turns": [
+        {
+          "text": "دفع فاتورة",
+          "expect": "ask_which_biller"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": null
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T22",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "ابعت شي",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T23",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "حول",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T24",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "سدد",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T32",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "شنو هذا؟",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T33",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "احجبنة فلوت احه",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T34",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "هههههه",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T35",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "458",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T36",
+      "category": "malformed",
+      "turns": [
+        {
+          "text": "توك تؤبرني",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T44",
+      "category": "smalltalk",
+      "turns": [
+        {
+          "text": "شكرا چبي",
+          "expect": "clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "unknown"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T25",
+      "category": "insufficient_funds",
+      "turns": [
+        {
+          "text": "حول 900000 لزينب",
+          "expect": "rejected_insufficient"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 900000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T26",
+      "category": "insufficient_funds",
+      "turns": [
+        {
+          "text": "دفع فاتورة كهرباء 500000",
+          "expect": "rejected_insufficient"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 500000,
+              "biller": "كهرباء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T27",
+      "category": "insufficient_funds_combined",
+      "turns": [
+        {
+          "text": "حول 400 الف لزينب وادفع فاتورة الكهرباء 100 الف",
+          "expect": "rejected_insufficient"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 400000,
+              "recipient": "زينب"
+            },
+            {
+              "action": "bill_pay",
+              "amount": 100000,
+              "biller": "كهرباء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T28",
+      "category": "unknown_contact",
+      "turns": [
+        {
+          "text": "حول 25000 لسيف",
+          "expect": "contact_not_found"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 25000,
+              "recipient": "سيف"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T29",
+      "category": "unknown_biller",
+      "turns": [
+        {
+          "text": "ادفع فاتورة النجرة",
+          "expect": "biller_not_found"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 20000,
+              "biller": "نجرة"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T30",
+      "category": "unknown_biller",
+      "turns": [
+        {
+          "text": "شحن رصيد اورنج 15000",
+          "expect": "biller_not_found"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 15000,
+              "biller": "اورنج"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T31",
+      "category": "unlinked_biller",
+      "turns": [
+        {
+          "text": "ادفع فاتورة غاز المدينة 20000",
+          "expect": "biller_not_found"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 20000,
+              "biller": "غاز المدينة"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T37",
+      "category": "two_in_one",
+      "turns": [
+        {
+          "text": "دفع فاتورة الكهرباء وابعت 10000 لزينب",
+          "expect": "ask_amount"
+        },
+        {
+          "text": "35000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed_both"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": "كهرباء"
+            },
+            {
+              "action": "transfer",
+              "amount": 10000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -45000,
+        "txn_count": 2
+      }
+    },
+    {
+      "id": "T38",
+      "category": "two_in_one",
+      "turns": [
+        {
+          "text": "حول 20000 لنور وشحن كورك 10000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed_both"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 20000,
+              "recipient": "نور"
+            },
+            {
+              "action": "bill_pay",
+              "amount": 10000,
+              "biller": "كورك"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -30000,
+        "txn_count": 2
+      }
+    },
+    {
+      "id": "T39",
+      "category": "two_in_one_missing_amounts",
+      "turns": [
+        {
+          "text": "سدد فاتورة الماء وادفع الانترنت",
+          "expect": "ask_amount"
+        },
+        {
+          "text": "8000",
+          "expect": "ask_amount"
+        },
+        {
+          "text": "30000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed_both"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": "ماء"
+            },
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": "انترنت"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -38000,
+        "txn_count": 2
+      }
+    },
+    {
+      "id": "T40",
+      "category": "query",
+      "turns": [
+        {
+          "text": "كم رصيدي؟",
+          "expect": "balance_reported"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "balance_check"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T41",
+      "category": "query",
+      "turns": [
+        {
+          "text": "شو آخر حركاتك؟",
+          "expect": "history_reported"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "history"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T42",
+      "category": "query",
+      "turns": [
+        {
+          "text": "شنو رصيد المحفظة؟",
+          "expect": "balance_reported"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "balance_check"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T43",
+      "category": "query_flexible",
+      "turns": [
+        {
+          "text": "وين تروح فلوسي؟",
+          "expect": "balance_reported|history_reported|clarify"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "history"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T45",
+      "category": "cancel_flow",
+      "turns": [
+        {
+          "text": "حول 30000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "لا",
+          "expect": "cancelled"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 30000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T46",
+      "category": "cancel_flow",
+      "turns": [
+        {
+          "text": "دفع فاتورة كهرباء 35000",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "بعدين",
+          "expect": "not_executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 35000,
+              "biller": "كهرباء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T47",
+      "category": "cancel_flow",
+      "turns": [
+        {
+          "text": "حول 30000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "لا زين",
+          "expect": "cancelled"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 30000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T48",
+      "category": "cancel_flow",
+      "turns": [
+        {
+          "text": "حول 50000 لأحمد",
+          "expect": "ask_disambiguation"
+        },
+        {
+          "text": "كنسل",
+          "expect": "cancelled"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 50000,
+              "recipient": "أحمد"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T49",
+      "category": "cancel_flow",
+      "turns": [
+        {
+          "text": "دفع فاتورة الكهرباء",
+          "expect": "ask_amount"
+        },
+        {
+          "text": "الغي",
+          "expect": "cancelled"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": "كهرباء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T50",
+      "category": "repeat_transfer_legit",
+      "turns": [
+        {
+          "text": "حول 50000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        },
+        {
+          "text": "حول 50000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 50000,
+              "recipient": "زينب"
+            }
+          ]
+        },
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 50000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -100000,
+        "txn_count": 2
+      }
+    },
+    {
+      "id": "T51",
+      "category": "ambiguous_biller",
+      "turns": [
+        {
+          "text": "شحن موبايل 15000",
+          "expect": "ask_disambiguation"
+        },
+        {
+          "text": "1",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 15000,
+              "biller": "موبايل"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -15000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T52",
+      "category": "confirm_english",
+      "turns": [
+        {
+          "text": "حول 20000 لنور",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "yes",
+          "expect": "executed"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 20000,
+              "recipient": "نور"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -20000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T53",
+      "category": "insufficient_after_payment",
+      "turns": [
+        {
+          "text": "حول 400000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        },
+        {
+          "text": "ادفع فاتورة كهرباء 100000",
+          "expect": "rejected_insufficient"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 400000,
+              "recipient": "زينب"
+            }
+          ]
+        },
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": 100000,
+              "biller": "كهرباء"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -400000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "T54",
+      "category": "two_in_one_cancel",
+      "turns": [
+        {
+          "text": "دفع فاتورة الكهرباء وابعت 10000 لزينب",
+          "expect": "ask_amount"
+        },
+        {
+          "text": "لا",
+          "expect": "cancelled"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "bill_pay",
+              "amount": null,
+              "biller": "كهرباء"
+            },
+            {
+              "action": "transfer",
+              "amount": 10000,
+              "recipient": "زينب"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": 0,
+        "txn_count": 0
+      }
+    },
+    {
+      "id": "T55",
+      "category": "history_after_payment",
+      "turns": [
+        {
+          "text": "حول 20000 لزينب",
+          "expect": "ask_confirm"
+        },
+        {
+          "text": "نعم",
+          "expect": "executed"
+        },
+        {
+          "text": "شو آخر حركاتك؟",
+          "expect": "history_reported"
+        }
+      ],
+      "nlu": [
+        {
+          "intents": [
+            {
+              "action": "transfer",
+              "amount": 20000,
+              "recipient": "زينب"
+            }
+          ]
+        },
+        {
+          "intents": [
+            {
+              "action": "history"
+            }
+          ]
+        }
+      ],
+      "wallet_expect": {
+        "balance_delta": -20000,
+        "txn_count": 1
+      }
+    },
+    {
+      "id": "A01",
+      "category": "api_idempotency",
+      "script": "double_transfer_same_key",
+      "desc": "same Idempotency-Key twice -> one debit, same transaction id"
+    },
+    {
+      "id": "A02",
+      "category": "api_idempotency",
+      "script": "executor_retry_same_key",
+      "desc": "executor-level retry with same key -> duplicate flag, one debit"
+    },
+    {
+      "id": "A03",
+      "category": "api_idempotency",
+      "script": "legit_two_transfers",
+      "desc": "different keys -> two debits (legitimate repeat still works)"
+    }
+  ]
+}
