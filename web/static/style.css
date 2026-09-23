@@ -1,0 +1,100 @@
+:root {
+  --bg: #0f1420;
+  --panel: #1a2130;
+  --card: #232c40;
+  --accent: #2dd4a7;
+  --accent2: #f4b860;
+  --danger: #e05c6a;
+  --text: #e8edf5;
+  --muted: #8b97ab;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Segoe UI", Tahoma, "Noto Kufi Arabic", sans-serif;
+  background: var(--bg); color: var(--text);
+  height: 100vh; display: flex; justify-content: center;
+}
+.app {
+  width: 100%; max-width: 760px; display: flex; flex-direction: column;
+  background: var(--panel); box-shadow: 0 0 60px rgba(0,0,0,.45);
+}
+header {
+  display: flex; align-items: center; gap: 14px; padding: 14px 20px;
+  border-bottom: 1px solid #2b3550; background: #141b29;
+}
+.brand { display: flex; align-items: center; gap: 12px; flex: 1; }
+.logo {
+  width: 42px; height: 42px; border-radius: 12px; background: var(--accent);
+  color: #06281e; font-weight: 800; display: grid; place-items: center; font-size: 15px;
+}
+h1 { font-size: 17px; }
+.sub { font-size: 12px; color: var(--muted); }
+.userbox { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; font-size: 13px; }
+.balance { color: var(--accent); font-weight: 700; }
+.ghost {
+  background: none; border: 1px solid #38445f; color: var(--muted);
+  border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 12px; font-family: inherit;
+}
+.ghost:hover { color: var(--text); border-color: var(--accent); }
+
+main#chat { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.msg { max-width: 78%; padding: 10px 14px; border-radius: 14px; line-height: 1.7; font-size: 14.5px; white-space: pre-wrap; }
+.msg.user { align-self: flex-start; background: #2b3550; border-bottom-right-radius: 4px; }
+.msg.bot { align-self: flex-end; background: #20283a; border-bottom-left-radius: 4px; }
+
+.card {
+  align-self: flex-end; width: 78%; background: var(--card);
+  border: 1px solid var(--accent); border-radius: 14px; overflow: hidden;
+}
+.card .head {
+  background: rgba(45,212,167,.12); color: var(--accent); font-weight: 700;
+  padding: 9px 14px; font-size: 13.5px; display: flex; align-items: center; gap: 8px;
+}
+.card .body { padding: 6px 14px; }
+.proposal { padding: 10px 0; border-bottom: 1px dashed #38445f; }
+.proposal:last-child { border-bottom: none; }
+.p-row { display: flex; justify-content: space-between; font-size: 13.5px; padding: 2px 0; }
+.p-row .label { color: var(--muted); }
+.p-amount { color: var(--accent2); font-weight: 700; }
+.p-main { font-size: 15px; font-weight: 600; }
+.card .foot {
+  padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(0,0,0,.18); font-size: 12.5px; color: var(--muted);
+}
+.card .btns { display: flex; gap: 8px; padding: 10px 14px; }
+.btn { padding: 8px 22px; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; cursor: pointer; }
+.btn.ok { background: var(--accent); color: #06281e; font-weight: 700; }
+.btn.no { background: none; border: 1px solid var(--danger); color: var(--danger); }
+
+.choices { align-self: flex-end; display: flex; flex-wrap: wrap; gap: 8px; max-width: 78%; }
+.choice {
+  background: var(--card); border: 1px solid #38445f; color: var(--text);
+  border-radius: 10px; padding: 8px 14px; cursor: pointer; font-size: 13.5px; font-family: inherit;
+}
+.choice:hover { border-color: var(--accent2); }
+
+.quick { display: flex; gap: 8px; padding: 10px 20px 0; flex-wrap: wrap; }
+.quick button {
+  background: #141b29; border: 1px solid #2b3550; color: var(--muted); border-radius: 20px;
+  padding: 6px 14px; font-size: 12.5px; cursor: pointer; font-family: inherit;
+}
+.quick button:hover { color: var(--text); border-color: var(--accent); }
+
+form#form { display: flex; gap: 10px; padding: 14px 20px; }
+#input {
+  flex: 1; background: #141b29; border: 1px solid #2b3550; color: var(--text);
+  border-radius: 10px; padding: 12px 16px; font-size: 15px; font-family: inherit;
+}
+#input:focus { outline: none; border-color: var(--accent); }
+#send {
+  background: var(--accent); border: none; color: #06281e; font-weight: 700;
+  border-radius: 10px; padding: 12px 26px; font-size: 14px; cursor: pointer; font-family: inherit;
+}
+#send:disabled { opacity: .5; }
+#mic {
+  background: #141b29; border: 1px solid #2b3550; color: var(--text);
+  border-radius: 10px; padding: 12px 16px; font-size: 16px; cursor: pointer;
+}
+#mic.rec { background: var(--danger); border-color: var(--danger); animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: .6; } }
+.typing { color: var(--muted); font-size: 13px; align-self: flex-end; padding: 4px 6px; }

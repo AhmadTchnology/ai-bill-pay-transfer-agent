@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وكيل دفع الفواتير والتحويل</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <span class="logo">د.ع</span>
+      <div>
+        <h1>وكيل الدفع والتحويل</h1>
+        <p class="sub">تتكلم عراقي — ودفع بجملة وحدة</p>
+      </div>
+    </div>
+    <div class="userbox" id="userbox" style="display:none">
+      <span id="username"></span>
+      <span class="balance" id="balance"></span>
+    </div>
+    <button id="resetBtn" class="ghost" title="محادثة جديدة + تصفير المحفظة">↺ جديد</button>
+  </header>
+
+  <main id="chat"></main>
+
+  <div class="quick" id="quick">
+    <button data-t="دفع فاتورة الكهرباء">دفع فاتورة الكهرباء</button>
+    <button data-t="حول 25 الف لزينب">حول 25 ألف لزينب</button>
+    <button data-t="شحن رصيد آسياسيل 15 الف">شحن آسياسيل 15 ألف</button>
+    <button data-t="كم رصيدي؟">كم رصيدي؟</button>
+  </div>
+
+  <form id="form">
+    <input id="input" autocomplete="off" placeholder="اكتب طلبك بالعراقي… مثال: حول 50 الف لأحمد">
+    <button type="button" id="mic" title="تكلم بالعراقي (voice input)">🎙</button>
+    <button type="submit" id="send">إرسال</button>
+  </form>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
