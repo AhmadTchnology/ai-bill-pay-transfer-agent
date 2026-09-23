@@ -1,0 +1,13 @@
+# secrets
+.env
+
+# runtime artifacts
+data/wallet.db
+*.log
+nohup.out
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
