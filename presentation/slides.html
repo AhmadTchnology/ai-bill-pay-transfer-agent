@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bill Pay & Transfer Agent — Slides</title>
+<style>
+  :root {
+    --bg: #0f1420; --panel: #1a2130; --card: #232c40;
+    --accent: #2dd4a7; --accent2: #f4b860; --danger: #e05c6a;
+    --text: #e8edf5; --muted: #8b97ab; --line: #2b3550;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #05070c; font-family: "Segoe UI", Tahoma, sans-serif; }
+  .slide {
+    width: 1280px; height: 720px; margin: 24px auto; background: var(--bg);
+    color: var(--text); padding: 44px 56px; position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  @media print {
+    body { background: none; }
+    .slide { margin: 0; page-break-after: always; border: none; }
+    @page { size: 1280px 720px; margin: 0; }
+  }
+  .kicker { color: var(--accent); font-size: 15px; font-weight: 700; letter-spacing: 2px; margin-bottom: 6px; }
+  h1 { font-size: 34px; margin-bottom: 4px; }
+  h1 .ar { color: var(--accent2); font-weight: 600; }
+  .sub { color: var(--muted); font-size: 15px; margin-bottom: 18px; }
+  .cols { display: flex; gap: 22px; flex: 1; min-height: 0; }
+  .col { flex: 1; min-width: 0; }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
+  .box h2 { font-size: 15px; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .box.gold h2 { color: var(--accent2); }
+  p, li { font-size: 14.5px; line-height: 1.55; color: var(--text); }
+  ul { list-style: none; }
+  li { padding-left: 18px; position: relative; margin-bottom: 6px; }
+  li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); }
+  .gold li::before { color: var(--accent2); }
+  .ar { font-size: 15px; }
+  .flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; font-weight: 600; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; white-space: nowrap; }
+  .step.hot { border-color: var(--accent); color: var(--accent); }
+  .step.llm { border-color: var(--accent2); color: var(--accent2); }
+  .arr { color: var(--muted); }
+  .rule {
+    background: rgba(45,212,167,.08); border: 1px solid var(--accent); border-radius: 12px;
+    padding: 12px 16px; font-size: 15px; line-height: 1.5; margin-top: auto;
+  }
+  .rule b { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  td { padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.k { color: var(--muted); white-space: nowrap; width: 128px; }
+  .num { font-size: 26px; font-weight: 800; color: var(--accent); }
+  .num.gold { color: var(--accent2); }
+  .numlab { font-size: 12.5px; color: var(--muted); line-height: 1.3; }
+  .statrow { display: flex; gap: 12px; margin-bottom: 14px; }
+  .stat { flex: 1; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .badge { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 6px; padding: 2px 8px; margin-right: 6px; }
+  .badge.cut { background: rgba(224,92,106,.15); color: var(--danger); }
+  .badge.keep { background: rgba(45,212,167,.15); color: var(--accent); }
+  .foot { position: absolute; bottom: 16px; left: 56px; right: 56px; display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ================= SLIDE 1 — APPROACH ================= -->
+<section class="slide">
+  <div class="kicker">SLIDE 1 — OUR APPROACH</div>
+  <h1>Bill Pay & Transfer Agent <span class="ar">— وكيل الدفع والتحويل</span></h1>
+  <div class="sub">One spoken or typed sentence in Iraqi Arabic becomes a completed, <b style="color:var(--accent)">human-confirmed</b> transaction — or an honest explanation why not.</div>
+
+  <div class="cols">
+    <div class="col" style="flex:1.05">
+      <div class="box">
+        <h2>The user we design for</h2>
+        <ul>
+          <li>Less comfortable with smartphones: multi-tap wallet flows get abandoned or mis-tapped.</li>
+          <li>Speaks <b>dialect</b>, not formal Arabic — “<span class="ar">حول 50 الف لأحمد</span>”, “<span class="ar">سدد فاتورة النت</span>”.</li>
+          <li>Wants zero screens: one sentence, one confirmation, done.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h2>End to end</h2>
+        <div class="flow">
+          <span class="step">🎙 Voice / text</span><span class="arr">→</span>
+          <span class="step">Whisper STT</span><span class="arr">→</span>
+          <span class="step llm">GLM-5.3 NLU · proposes only</span><span class="arr">→</span>
+          <span class="step">Resolver: ask, never guess</span><span class="arr">→</span>
+          <span class="step hot">Confirmation card</span><span class="arr">→</span>
+          <span class="step hot">Rule-checked “نعم”</span><span class="arr">→</span>
+          <span class="step">Idempotent executor</span><span class="arr">→</span>
+          <span class="step">Mock wallet</span><span class="arr">→</span>
+          <span class="step">Honest result</span>
+        </div>
+        <p style="margin-top:10px; font-size:13.5px; color:var(--muted)">
+          Missing info? It asks (“<span class="ar">لمين؟ شلون؟</span>”). Ambiguous? A numbered question, never a coin flip.
+          Two requests in one sentence? One card, all-or-nothing.</p>
+      </div>
+    </div>
+
+    <div class="col" style="flex:0.95">
+      <div class="box">
+        <h2>Models, tools & data</h2>
+        <table>
+          <tr><td class="k">NLU (“brain”)</td><td>z-ai/<b>GLM-5.3</b> via NVIDIA NIM — extracts structured intent; no execution power</td></tr>
+          <tr><td class="k">Voice (stretch)</td><td><b>faster-whisper</b> large-v3-turbo, int8 CPU (~2 GB), Iraqi prompt + hotwords</td></tr>
+          <tr><td class="k">Stack</td><td>FastAPI · SQLite · httpx · single-file JS chat UI</td></tr>
+          <tr><td class="k">Wallet data</td><td>100% <b>LLM-generated from a schema</b> (15 contacts incl. 3 “Ahmeds”, 7 billers) — no real records</td></tr>
+          <tr><td class="k">Test data</td><td>LLM-drafted, hand-edited Iraqi dialect; held-out set written after freeze</td></tr>
+          <tr><td class="k">Built with</td><td>AI coding assistant (disclosed) + team review — see DISCLOSURE.md</td></tr>
+        </table>
+      </div>
+      <div class="rule">
+        <b>Golden rule:</b> the LLM can only <b>propose</b>. Money moves only from a designed state machine after a
+        <b>regex-checked human “نعم”</b> — a hallucinated intent can never pay anyone.
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AI Hackathon · Bill Pay & Transfer Agent</span><span>github.com/AhmadTchnology/ai-bill-pay-transfer-agent</span></div>
+</section>
+
+<!-- ================= SLIDE 2 — PROOF ================= -->
+<section class="slide">
+  <div class="kicker">SLIDE 2 — HOW WE PROVE IT WORKS</div>
+  <h1>Evidence, not a demo</h1>
+  <div class="sub">Every run resets the wallet and checks <b style="color:var(--accent)">bank-level invariants</b> (balance delta, transaction count) — not just chat replies.</div>
+
+  <div class="statrow">
+    <div class="stat"><span class="num">58/58</span><div class="numlab">tuning set — live GLM-5.3 NLU<br>55 Iraqi-dialect cases + 3 idempotency proofs</div></div>
+    <div class="stat"><span class="num">10/10</span><div class="numlab">held-out set — written after freeze,<br>never tuned on, run once · results committed</div></div>
+    <div class="stat"><span class="num gold">6/6</span><div class="numlab">voice smoke — real mic format (webm/opus):<br>spoken transfer → “نعم” → one debit</div></div>
+    <div class="stat"><span class="num">×2</span><div class="numlab">same idempotency key submitted twice<br>→ same transaction, debited once</div></div>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <div class="box">
+        <h2>How we test</h2>
+        <ul>
+          <li><b>Replay mode</b>: recorded NLU pins the deterministic core — runs without an API key.</li>
+          <li><b>Live mode</b>: the same 68 cases through real GLM-5.3 end-to-end.</li>
+          <li>Should-not-execute cases (cancel, vague reply, gibberish) verified to move <b>zero</b> money.</li>
+          <li>Voice tested with <b>ar-IQ</b> TTS fixtures so judges reproduce without a microphone.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box gold">
+        <h2>What could go wrong — and does</h2>
+        <ul class="gold" style="font-size:13.5px">
+          <li>Ambiguous “<span class="ar">أحمد</span>” → numbered question, never a guess.</li>
+          <li>Insufficient balance → honest early reject; combined requests drop whole, never half-executed.</li>
+          <li>Timeout / retry after success → idempotency key returns original result — no double pay.</li>
+          <li>Malformed LLM JSON → robust parse + bounded retries; fail loudly, never guess.</li>
+          <li>Anything but an explicit “<span class="ar">نعم</span>” → “<span class="ar">ما انحولّ شي</span>” — nothing executes.</li>
+        </ul>
+      </div>
+      <div class="box" style="margin-bottom:0">
+        <h2>If time ran short — we built in cut-order</h2>
+        <p style="font-size:13.5px">
+          <span class="badge cut">CUT FIRST</span> voice (stretch) · web UI → CLI · two-in-one requests<br>
+          <span class="badge keep">NEVER CUT</span> confirmation step · idempotency · ask-don’t-guess — <i>those are the product.</i>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Full evidence: tests/results.md · results_heldout.md · FAILURE_MODES.md (8 modes)</span><span>Live demo on judge-supplied input — ready</span></div>
+</section>
+
+</body>
+</html>
